@@ -31,19 +31,19 @@ public class Main {
                         }
                         ois.close();
                         s.close();
-
                         if ("reg".equals(message)) {
 
                             Socket s2 = server.accept();
                             ObjectOutputStream oos2 = new ObjectOutputStream(s2.getOutputStream());
-                            oos2.writeObject("Registration accepted, enter message:");
-
                             ObjectInputStream ois2 = new ObjectInputStream(s2.getInputStream());
                             message = ois2.readObject().toString();
-                            accounts.accountHolder.add(message);
-
-
-                            System.out.println("ChatBot: User [" + message + "] is added");
+                            if ("reg".equals(message)) {
+                                oos2.writeObject("Wrong Login. Login can't be [reg], try to \"reg\" again");
+                            } else {
+                                accounts.accountHolder.add(message);
+                                oos2.writeObject("Registration accepted, enter message:");
+                                System.out.println("ChatBot: User [" + message + "] is added");
+                            }
                             oos2.close();
                             ois2.close();
                             s2.close();
