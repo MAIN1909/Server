@@ -14,34 +14,34 @@ public class Main {
 
                 ObjectInputStream ois = new ObjectInputStream(
                         s.getInputStream());
-                String Message = ois.readObject().toString();
+                String message = ois.readObject().toString();
                 oos.close();
                 ois.close();
                 s.close();
 
-                if ("reg".equals(Message)) {
+                if ("reg".equals(message)) {
 
                     Socket s2 = server.accept();
                     ObjectOutputStream oos2 = new ObjectOutputStream(s2.getOutputStream());
                     oos2.writeObject("Registration accepted, enter message:");
 
                     ObjectInputStream ois2 = new ObjectInputStream(s2.getInputStream());
-                    Message = ois2.readObject().toString();
-                    accounts.accountHolder.add(Message);
+                    message = ois2.readObject().toString();
+                    accounts.accountHolder.add(message);
 
 
-                    System.out.println("User [" + Message + "] is added");
+                    System.out.println("User [" + message + "] is added");
                     oos2.close();
                     ois2.close();
                     s2.close();
                 }
-                if (accounts.accountHolder.contains(Message)) {
-                    System.out.println("User [" + Message + "] is exist, Welcome!");
+                if (accounts.accountHolder.contains(message)) {
+                    System.out.println("User [" + message + "] is exist, Welcome!");
                     while (true) {
                         Socket s3 = server.accept();
                         ObjectInputStream ois3 = new ObjectInputStream(s3.getInputStream());
                         String secondMessage = ois3.readObject().toString();
-                        System.out.println(Message + ": " + secondMessage);
+                        System.out.println(message + ": " + secondMessage);
 
                         ObjectOutputStream oos3 = new ObjectOutputStream(s3.getOutputStream());
                         oos3.writeObject("Message sended, enter message:");
@@ -51,7 +51,7 @@ public class Main {
                         ois3.close();
                         s3.close();
                         if ("exit".equals(secondMessage)) {
-                            System.out.println("[" + Message + "]" + " is exit from chat");
+                            System.out.println("[" + message + "]" + " is exit from chat");
                             break;
                         }
                     }
